@@ -3,6 +3,7 @@
 //Diving in point for the game (initialize everything/load first level)
 //*******************************************************************************************
 
+var loaded = 0;
 function startGame() {
 	console.log('statring');
 	trackKeys();
@@ -10,21 +11,31 @@ function startGame() {
 	Player.jumpA = -4 / Math.pow(Player.moveTime, 2);
 	Player.jumpV = -Player.jumpA * Player.moveTime;
 	Player.spinC = Math.PI/2 / Player.moveTime;
-	Level.sprites.src = "img/squareSprites.png";
-	Player.sprites.src = "img/playerSprites.png";
+	
 
 	
-	Level.sprites.onload = function() {
-		console.log("loaded blocks");
-		Player.sprites.onload = function() {
-			console.log("loaded player");
-			Level.number = -1;
-			console.log('goin to level');
-			nextLevel();
-			requestAnimationFrame(animateGame);
-			
-		}
+	Level.sprites.onload = function() 
+	{
+		console.log('loaded blocks');
+		loaded += 1;
+		if(loaded == 2) startIt();
 	}
+	Player.sprites.onload = function() 
+	{
+		console.log("loaded player");
+		loaded += 1;
+		if(loaded == 2) startIt();
+	}
+	Level.sprites.src = "img/squareSprites.png";
+	Player.sprites.src = "img/playerSprites.png";
+}
+
+function startIt()
+{
+	console.log('goin to level');
+	Level.number = -1;
+	nextLevel();
+	requestAnimationFrame(animateGame);
 }
 
 function jumpInto() {
