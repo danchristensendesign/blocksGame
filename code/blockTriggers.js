@@ -212,8 +212,8 @@ function Ice() {
 }
 
 function Boost() {
-	Player.speed.x += 2* unitVal(Player.speed.x);
-	Player.speed.y += 2* unitVal(Player.speed.y);
+	Player.speed.x += 1* unitVal(Player.speed.x);
+	Player.speed.y += 1* unitVal(Player.speed.y);
 	setState(Sliding);
 }
 

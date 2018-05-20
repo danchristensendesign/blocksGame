@@ -1,7 +1,24 @@
 
-	
+/*
+Block Codes
+"G": Grass
+"X": Goal
+"L": Lava
+"I": Ice
+"B": Boost
+"T": TrampReg
+"-": TrampHor
+"|": TrampVrt
+"R": TrampDDn
+"/": TrampDUp
+"O": TrampSpin 
+*/
+
+
 var GAME_LEVELS = [
-	{map: ["LLLLLLL",
+
+	
+ 	{map: ["LLLLLLL",
 		   "GGLGLGX",
 		   "LLLLLLLL"],
 	playerX: 1,
@@ -36,7 +53,7 @@ var GAME_LEVELS = [
 		   "IILI",
 		   "GLIG",
 		   "LIII",
-		   "IIII",
+		   "IILI",
 		   "GGGG",
 		   "IIII",
 		   "IIII",
@@ -57,7 +74,7 @@ var GAME_LEVELS = [
 		   "IIIGIITXIII"],
 	playerX: 2,
 	playerY: 2,
-	moves: 6},
+	moves: 6}, 
 	
 	
 	
@@ -80,66 +97,36 @@ var GAME_LEVELS = [
 	moves: 3},
 	
 	
-	{map: ["OLLLX",
-		   "LLLLL",
-		   "OLOLO",
-		   "LLLLL",
-		   "OLGLG"],
-	playerX: 5,
-	playerY: 5,
-	moves: 4},
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	{map: ["GIIL-LLLLLL",
-		   "ILITLLL/L-L",
-		   "IIGL/BIBIIX",
-		   "LLLLRIGGLLL"],
-	playerX: 1,
-	playerY: 1,
-	moves: 4},
-	
-	{map: ["/BBBR|RIX",
-		   "BLLLITL/L",
-		   "BLLLILLLL",
-		   "BLLLBLLLL",
-		   "BLLLBLLLL",
-		   "BLLLILLLL",
-		   "RBBB/|LLL"],
-	playerX: 5,
-	playerY: 3,
-	moves: 4},
-	
-	{map: ["/|BBBBBBBBBBGLX",
-		   "BLL-LLL-LLLILLL",
-		   "BLLLILLLLLLLLLL",
-		   "R|LILTLLLTLLLGG",
-		   "BLLLBLLLLLLLLLL",
-		   "RLL-LLL-LLL-LLL"],
-	playerX: 15,
-	playerY: 4,
-	moves: 4},
-	
-	
-	{map: ["LLLLLLLLLLLLL",
-		   "GGGBII-LLLGGX",
-		   "LLLLLLLLLLLLL"],
-	playerX: 1,
-	playerY: 2,
-	moves: 3},
-	
 	{map: ["LLLLLLLLL",
 		   "XLLGTBII|",
 		   "LLLLLLLLL"],
 	playerX: 4,
 	playerY: 2,
-	moves: 1}
+	moves: 1},
+	
+	
+	{map: ["GIIL-LLLLLL",
+		   "ILIT-LL/L-L",
+		   "IIGL/IIIIIX",
+		   "GLLLRIGGLLL"],
+	playerX: 1,
+	playerY: 1,
+	moves: 4},
+	
+	{map: [
+		"-L-L-RLLLLL",
+		"L/-RL-LGLLL",
+		"||G||-IIIIX",
+		"LR-/L-LILLL",
+		"-L-L-LLLGLL"],
+	playerX: 3,
+	playerY: 3,
+	moves: 3}
+	
+	
+	
+	
+	
 	];
 
 if (typeof module != "undefined" && module.exports)

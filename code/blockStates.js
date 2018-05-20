@@ -3,12 +3,13 @@
 function setState(newState) {
 	//console.log("im in newState");
 	//console.log(Player.action);
+	Player.action = newState;
 	if(Player.action === null || (notMoving(Player.action) || notMoving(newState))) {
-		//console.log("shoulb be darwing workds");
+		console.log("shoulb be darwing workds");
 		//drawBlocks();
 		drawWords();
 	}
-	Player.action = newState;
+	
 	//console.log(Player.action);
 	Player.action();
 	Player.eventFrame = new Date().getTime();

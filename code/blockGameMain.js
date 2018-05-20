@@ -2,7 +2,6 @@
 
 //Diving in point for the game (initialize everything/load first level)
 //*******************************************************************************************
-
 var loaded = 0;
 function startGame() {
 	console.log('statring');

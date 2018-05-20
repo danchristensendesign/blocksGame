@@ -39,7 +39,18 @@ function drawWords() {
 	Level.cx.fillStyle = "RGB(255,255,255)";
 	Level.cx.fillText("plan a move: arrow keys      execute a move: space bar", Level.margin,20);
 	Level.cx.fillText("undo: Z      restart: R      show/hide move possibilities: T", Level.margin,40);
-	Level.cx.fillText("level: " + (Level.number +1) + ", moves left: " + Player.movesLeft, Level.margin, 70);
+	Level.cx.font = ("20px Arial");
+	Level.cx.fillText("level: " + (Level.number +1) + '    moves left:', Level.margin, 70);
+	Level.cx.font = ("25px Arial");
+	if(Player.action === Winning || Player.action === GameOver)
+	{
+		Level.cx.fillText("GOAL", Level.margin + 190, 70);
+	}
+	else
+	{
+		if(Player.movesLeft < 2) Level.cx.fillStyle = "RGB(255,0,0)";
+		Level.cx.fillText(Player.movesLeft, Level.margin + 190, 70);
+	}
 }
 
 function drawBlocks(targs) {
