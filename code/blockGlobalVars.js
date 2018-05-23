@@ -1,7 +1,7 @@
 //global variable holders for the Level/player state	
 //**********************************************************************************************
 
-
+var maxBlock = 100;
 var Level = {
 	
 	//unchanging
@@ -9,14 +9,17 @@ var Level = {
 	cx : null,
 	sprites : document.createElement("img"),
 	spriteWidth : 40,
-	blockWidth : 60,
+	blockWidth : maxBlock,
 	margin : 80,
 	
 	//changing
 	number : null,
 	width : 0,
 	height : 0,
-	blocks : [],	
+	blocks : [],
+	curTime : null,
+	lastFrame : null,
+	frameTime : 200
 };
 
 var Player = {
@@ -24,11 +27,11 @@ var Player = {
 	//unchanging
 	sprites : document.createElement("img"),
 	spriteWidth : 40,
-	moveTime : 500,
+	moveTime : 300,
 	jumpA : 0,
 	jumpV : 0,
 	spinC : 0,
-	targAlpha : 0.3,
+	targAlpha : 0.5,
 	
 	//changing
 	action : null,

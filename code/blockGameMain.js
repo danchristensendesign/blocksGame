@@ -45,6 +45,7 @@ function jumpInto() {
 
 function animateGame() {
 	var thisFrame = new Date().getTime();
+	Level.curTime = thisFrame;
 	var elapsed = thisFrame - Player.eventFrame;
 	if(updateFrame(elapsed)){
 	
@@ -53,7 +54,7 @@ function animateGame() {
 			Player.targMove = Vector(0,0,0);
 			onMap(Player.moves[0])();
 		}
-
+		
 		requestAnimationFrame(animateGame);
 	}
 }

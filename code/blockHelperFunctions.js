@@ -14,10 +14,14 @@ function limitTargets() {
 }
 
 function delWithinTarget(del) {
+	console.log(del.x + ', min ' + Player.targLimit.xMin + ', max ' +  Player.targLimit.xMax);
+	console.log(del.y + ', min ' + Player.targLimit.yMin + ', max ' +  Player.targLimit.yMax);
 	if(!(del.x < Player.targLimit.xMin || del.x > Player.targLimit.xMax ||
 		   del.y < Player.targLimit.yMin || del.y > Player.targLimit.yMax))
-		
+	{
+		console.log(del.x + ', ' + del.y + ' good');
 		return true;
+	}
 	else
 		return false;
 };

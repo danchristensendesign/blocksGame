@@ -1,6 +1,24 @@
+var drawn = false;
+var lavaInd = 2;
+function getLavaInd()
+{
+	return lavaInd;
+}
+function getBoostInd()
+{
+	return lavaInd + 4;
+}
+
+const screenW = (window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth) -20;
+const screenH = (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) -20;
+
 Level.canvas = document.getElementById("LevelCanvas");
+Level.canvas.width = screenW;
+Level.canvas.height = screenH;
 Level.cx = Level.canvas.getContext("2d");
 Player.canvas = document.getElementById("PlayerCanvas");
+Player.canvas.width = screenW;
+Player.canvas.height = screenH;
 Player.cx = Player.canvas.getContext("2d");
 Level.cx.globalAlpha = 1.0;
 Player.cx.globalAlpha = 1.0;
@@ -16,7 +34,8 @@ function setAntiAlias(parent){
 
 
 function updateFrame(elapsed) {
-	//if(drawBlocks(Player.drawTargs)){
+	if(drawBlocks(elapsed))
+	{
 		clearCanvas(Player);	
 		if(drawTargets(elapsed)){
 		
@@ -24,7 +43,7 @@ function updateFrame(elapsed) {
 				return true;
 			
 		}
-	//}
+	}
 };
 
 
@@ -53,31 +72,23 @@ function drawWords() {
 	}
 }
 
-function drawBlocks(targs) {
-	
+var timer = 0;
+function drawBlocks(elapsed) 
+{
+	//console.log(elapsed);
+	if(Level.lastFrame === null || Level.curTime - Level.lastFrame > Level.frameTime)
+	{
+		//console.log('now');
+		Level.lastFrame = Level.curTime;
+		lavaInd += 1;
+		if(lavaInd > 4) lavaInd = 2;
+	}
 	//initialize to all squares
 	var X = [0, Level.width-1];
 	var Y = [0, Level.height-1];
-
-	if (arguments.length > 0){
-		
-		//redrawing all target squares
-		// if(targs === true){
-			X = [Math.floor(Player.moves[0].x) + Player.targLimit.xMin, 
-				 Math.ceil(Player.moves[0].x) + Player.targLimit.xMax];
-				 
-			Y = [Math.floor(Player.moves[0].y) + Player.targLimit.yMin, 
-				 Math.ceil(Player.moves[0].y) + Player.targLimit.yMax];
-		
-		//redrawing only squares player is touching
-		// }else {
-			// X = [Math.floor(Player.moves[0].x), 
-				 // Math.ceil(Player.moves[0].x)];
-				 
-			// Y = [Math.floor(Player.moves[0].y), 
-				 // Math.ceil(Player.moves[0].y)];
-		
-	} else{
+	
+	if(!drawn)
+	{
 		Level.cx.fillStyle = "RGB(0,0,0)";
 		Level.cx.fillRect(0, 0, Level.canvas.width, Level.canvas.height);
 		// Level.cx.fillStyle = "RGB(255,255,255)";
@@ -88,10 +99,12 @@ function drawBlocks(targs) {
 	}
 	
 	//loop through and draw squares
-	for(var x = X[0]; x <= X[1]; x +=1){
-		for(var y = Y[0]; y <= Y[1]; y +=1){
-			if(x === 2 && y ===2 )
-				console.log("drawing tramp " + Level.blocks[y][x].ind);
+	for(var x = X[0]; x <= X[1]; x +=1)
+	{
+		for(var y = Y[0]; y <= Y[1]; y +=1)
+		{
+			/* if(x === 2 && y ===2 )
+				console.log("drawing tramp " + Level.blocks[y][x].ind); */
 			if(onMap(Vector(x, y)) === OffMap){
 				Level.cx.fillStyle = "RGB(255,255,255)";
 				Level.cx.fillRect(Level.margin + x * Level.blockWidth, Level.margin + y * Level.blockWidth, Level.blockWidth, Level.blockWidth);
@@ -102,6 +115,7 @@ function drawBlocks(targs) {
 			}
 		}
 	}
+	drawn = true;
 	return true;
 };
 
@@ -134,10 +148,12 @@ function drawPlayer(elapsed) {
 
 function drawTargets(elapsed) {
 	var scl;
-	if(Player.drawTargs) {
+	if(Player.drawTargs) 
+	{
 		
 		
-		if(Player.targsOn) {
+		if(Player.targsOn) 
+		{
 			Player.cx.save();
 			Player.cx.translate(Level.margin + (.5 +Player.moves[0].x) * Level.blockWidth, 
 						 Level.margin + (.5 +Player.moves[0].y) * Level.blockWidth);

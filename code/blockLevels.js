@@ -20,7 +20,7 @@ var GAME_LEVELS = [
 	
  	{map: ["LLLLLLL",
 		   "GGLGLGX",
-		   "LLLLLLLL"],
+		   "LLLLLLL"],
 	playerX: 1,
 	playerY: 2,
 	moves: 4},
@@ -96,6 +96,19 @@ var GAME_LEVELS = [
 	playerY: 2,
 	moves: 3},
 	
+	{map: ["IXIIIIBIII",
+		   "LLLLLLLLLL",
+		   "IBIIIIIII|"],
+	playerX: 1,
+	playerY: 3,
+	moves: 1},
+	
+	{map: ["XLBLLLLLL",
+		   "LLGGTBI|L",
+		   "LLLLLLLLL"],
+	playerX: 4,
+	playerY: 2,
+	moves: 2},
 	
 	{map: ["LLLLLLLLL",
 		   "XLLGTBII|",

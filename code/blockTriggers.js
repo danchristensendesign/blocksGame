@@ -42,6 +42,7 @@ function trackKeys() {
  function PlanMove(planDelta) {
 	if (Player.action === Resting && Player.movesLeft > 0) {
 		var tDel = VectorPlus(Player.targMove, planDelta);
+		
 		// Player.targMove = VectorCopy(tDel);
 		// return;
 		// check that it's within the target limits
@@ -51,13 +52,19 @@ function trackKeys() {
 			// check if it's in a dead spot
 			if(VectorToAbs(tDel) === 3){
 				
+				//moving from an outer edge, double the movement
+				if(Math.abs(Player.targMove.x) === 2 || Math.abs(Player.targMove.y) === 2)
+				{
+					
+					tDel = VectorPlus(tDel, planDelta);
+					console.log('doubled ' + tDel.x + ', ' + tDel.y);
+				}
 				// if it's moving to a dead spot from an inner corner, move to the nearest cardinal (in the specified direction)
-				if(Math.abs(Player.targMove.x) === Math.abs(Player.targMove.y)) 
+				else if(Math.abs(Player.targMove.x) === Math.abs(Player.targMove.y)) 
 					tDel = VectorPlus(planDelta, planDelta)
 				
 				// if it's moving to a dead spot from an outer edge, double the movement amount (since ok/dead spots alternate)
-				else
-					tDel = VectorPlus(tDel, planDelta);
+
 				
 				if(delWithinTarget(tDel))
 					Player.targMove = VectorCopy(tDel);
@@ -66,6 +73,7 @@ function trackKeys() {
 			}else
 				Player.targMove = VectorCopy(tDel);
 		}
+		
 	}
 	//Player.moves[0] = VectorPlus(Player.moves[0], Player.targMove);
 	//console.log(Player.targMove.x +  " " + Player.targMove.y);
@@ -98,6 +106,7 @@ function trackKeys() {
 
 
 function nextLevel() {
+	drawn = false;
 	console.log('in the level');
 	//increment level, exit if no more
 	Level.number += 1;
@@ -110,11 +119,14 @@ function nextLevel() {
 	Level.width = GAME_LEVELS[Level.number].map[0].length;
 	Level.height = GAME_LEVELS[Level.number].map.length;
 	Level.blocks = [];
+	Level.blockWidth = Math.min(maxBlock, Math.floor((screenW - 2 * Level.margin)/Level.width), Math.floor((screenH - 2 * Level.margin)/Level.height));
 	
-	for(var y = 0; y < Level.height; y += 1) {
+	for(var y = 0; y < Level.height; y += 1) 
+	{
 		var levelRow = GAME_LEVELS[Level.number].map[y];
 		var blockRow = [];
-		for(var x = 0; x < Level.width; x += 1) {
+		for(var x = 0; x < Level.width; x += 1) 
+		{
 			blockRow.push(blockTypes[levelRow[x]]);
 		}
 		Level.blocks.push(blockRow);
@@ -131,7 +143,7 @@ function nextLevel() {
 }
 
 
-var TrampInd = 6;
+var TrampInd = 10;
 
 function getTrampInd(ind){
 	if(arguments.length < 1)
@@ -145,28 +157,28 @@ function getTrampInd(ind){
 var blockTypes = {
 	"G": {act: Grass, ind: function(){return 0;}},
 	"X": {act: Goal, ind: function(){return 1;}},
-	"L": {act: Lava, ind: function(){return 2;}},
-	"I": {act: Ice, ind: function(){return 3;}},
-	"B": {act: Boost, ind: function(){return 4;}},
-	"T": {act: TrampReg, ind: function(){return 5;}},
-	"-": {act: TrampHor, ind: function(){return 6;}},
-	"|": {act: TrampVrt, ind: function(){return 7;}},
-	"R": {act: TrampDDn, ind: function(){return 8;}},
-	"/": {act: TrampDUp, ind: function(){return 9;}},
+	"L": {act: Lava, ind: function(){return 2;}},//getLavaInd},//function(){return 2;}},
+	"I": {act: Ice, ind: function(){return 5;}},
+	"B": {act: Boost, ind: getBoostInd},
+	"T": {act: TrampReg, ind: function(){return 9;}},
+	"-": {act: TrampHor, ind: function(){return 10;}},
+	"|": {act: TrampVrt, ind: function(){return 11;}},
+	"R": {act: TrampDDn, ind: function(){return 12;}},
+	"/": {act: TrampDUp, ind: function(){return 13;}},
 	"O": {act: TrampSpin, ind: getTrampInd}
 };
 
 function spinTramp() {
 	console.log("should spin");
 	switch (TrampInd){
-			case 9:
-				return 6;
-			case 6:
-				return 8;
-			case 8: 
-				return 7;
-			case 7:
-				return 9;
+			case 13:
+				return 10;
+			case 10:
+				return 12;
+			case 12: 
+				return 11;
+			case 11:
+				return 13;
 			default:
 				console.log("i didnt change" + " " + TrampInd);
 				
@@ -211,10 +223,28 @@ function Ice() {
 	setState(Sliding);
 }
 
-function Boost() {
-	Player.speed.x += 1* unitVal(Player.speed.x);
-	Player.speed.y += 1* unitVal(Player.speed.y);
-	setState(Sliding);
+function Boost() 
+{
+	/* Player.speed.x += 1* unitVal(Player.speed.x);
+	Player.speed.y += 1* unitVal(Player.speed.y); */
+	var found = false;
+	for(var x = 0; x < Level.width; x += 1)
+	{
+		for(var y = 0; y < Level.height; y +=1)
+		{
+			if(Level.blocks[y][x].act === Boost && !(x === Player.moves[0].x && y === Player.moves[0].y))
+			{
+				console.log(x + ', ' + y);
+				Player.moves[0].x = x;
+				Player.moves[0].y = y;
+				found = true;
+				break;
+			}
+		}
+		if(found) break;
+	}
+	
+	setState(Player.action);
 }
 
 function TrampReg() {
@@ -238,22 +268,23 @@ function TrampDUp() {
 
 function TrampSpin() {
 	var tInd = TrampInd;
-	TrampInd = spinTramp();
+	
 	
 	switch(tInd){
-		case 6:
+		case 10:
 			TrampHor();
 			break;
-		case 7:
+		case 11:
 			TrampVrt();
 			break;
-		case 8:
+		case 12:
 			TrampDDn();
 			break;
-		case 9:
+		case 13:
 			TrampDUp();
 			break;
 	};
+	TrampInd = spinTramp();
 	
 
 }
