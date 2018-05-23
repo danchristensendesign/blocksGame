@@ -16,10 +16,10 @@ Block Codes
 
 
 var GAME_LEVELS = [
-
+	
 	
  	{map: ["LLLLLLL",
-		   "GGLGLGX",
+		   "BBLGLGX",
 		   "LLLLLLL"],
 	playerX: 1,
 	playerY: 2,
@@ -110,12 +110,7 @@ var GAME_LEVELS = [
 	playerY: 2,
 	moves: 2},
 	
-	{map: ["LLLLLLLLL",
-		   "XLLGTBII|",
-		   "LLLLLLLLL"],
-	playerX: 4,
-	playerY: 2,
-	moves: 1},
+	
 	
 	
 	{map: ["GIIL-LLLLLL",
