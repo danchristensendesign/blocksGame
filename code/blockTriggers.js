@@ -57,7 +57,7 @@ function trackKeys() {
 				{
 					
 					tDel = VectorPlus(tDel, planDelta);
-					console.log('doubled ' + tDel.x + ', ' + tDel.y);
+					//console.log('doubled ' + tDel.x + ', ' + tDel.y);
 				}
 				// if it's moving to a dead spot from an inner corner, move to the nearest cardinal (in the specified direction)
 				else if(Math.abs(Player.targMove.x) === Math.abs(Player.targMove.y)) 

@@ -4,7 +4,7 @@
 //*******************************************************************************************
 var loaded = 0;
 function startGame() {
-	console.log('statring');
+	console.log('starting');
 	trackKeys();
 	Level.number = -1;	
 	Player.jumpA = -4 / Math.pow(Player.moveTime, 2);
@@ -31,7 +31,7 @@ function startGame() {
 
 function startIt()
 {
-	console.log('goin to level');
+	console.log('going to level 0');
 	Level.number = -1;
 	nextLevel();
 	requestAnimationFrame(animateGame);

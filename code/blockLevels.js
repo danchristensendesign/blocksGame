@@ -19,7 +19,7 @@ var GAME_LEVELS = [
 	
 	
  	{map: ["LLLLLLL",
-		   "BBLGLGX",
+		   "GGLGLGX",
 		   "LLLLLLL"],
 	playerX: 1,
 	playerY: 2,
