@@ -204,9 +204,9 @@ function reConfigure()
 	frontCanv.width = screenW + scrollAmt;
 	frontCanv.height = screenH + scrollAmt;
 	backCx.restore();
-	backCx.translate(screenL, screenT);
+	backCx.translate(0, screenT);
 	frontCx.restore();
-	frontCx.translate(screenL, screenT);
+	frontCx.translate(0, screenT);
 	sMaj = Math.max(screenW, screenH);
 	sMin = Math.min(screenW, screenH);
 	flipped = (screenW > screenH);
@@ -227,11 +227,11 @@ function drawBase()
 	backCx.clearRect(0, 0, backCanv.width, backCanv.height);
 	frontCx.clearRect(0, 0, backCanv.width, backCanv.height);
 	backCx.restore();
-	backCx.restore();
 	
 	if(flipped)
 	{
 		backCx.save();
+		backCx.translate(0, screenT);
 		backCx.rotate(-Math.PI/2);
 		backCx.translate(-sMin, 0);
 		
