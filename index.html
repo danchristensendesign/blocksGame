@@ -226,6 +226,7 @@ function drawBase()
 	backCx.clearRect(0, 0, backCanv.width, backCanv.height);
 	frontCx.clearRect(0, 0, backCanv.width, backCanv.height);
 	backCx.restore();
+	backCx.restore();
 	
 	if(flipped)
 	{
@@ -241,12 +242,12 @@ function drawBase()
 		if(!flipped)
 		{
 			frontCx.drawImage(butImg, butts[i].imgInd * butImg.height, 0, butImg.height, butImg.height,
-				butS * i, screenT + screenH - butS, butS, butS);
+				butS * i, sMaj - butS, butS, butS);
 		}
 		else
 		{
 			frontCx.drawImage(butImg, butts[i].imgInd * butImg.height, 0, butImg.height, butImg.height,
-						 screenW - butS, screenH - butS * (i + 1), butS, butS);
+						 sMaj - butS, sMin - butS * (i + 1), butS, butS);
 		}
 	}
 	
