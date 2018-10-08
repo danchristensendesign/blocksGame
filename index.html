@@ -205,7 +205,8 @@ function reConfigure()
 	frontCanv.height = screenH + scrollAmt;
 	backCx.restore();
 	backCx.translate(screenL, screenT);
-	
+	frontCx.restore();
+	frontCx.translate(screenL, screenT);
 	sMaj = Math.max(screenW, screenH);
 	sMin = Math.min(screenW, screenH);
 	flipped = (screenW > screenH);
