@@ -84,11 +84,11 @@ function updateClick(e)
 				midCx.fillRect(screenL + butInd * butS, screenT + screenH - butS, butS, butS);
 			}
 		
-			else if(sX > startX && sX < screenW - startX && sY > startY && sY < screenH - butS - startY)
+			else if(sX > startMin && sX < screenW - startMin && sY > startMaj && sY < screenH - butS - startMaj)
 			{
-				var xInd = Math.floor((sX - startX)/(boxS + inGap));
-				var yInd = Math.floor((sY - startY)/(boxS + inGap));
-				midCx.fillRect(screenL + startX + xInd * (boxS + inGap), screenT + startY + yInd * (boxS + inGap), boxS, boxS);
+				var xInd = Math.floor((sX - startMin)/(boxS + inGap));
+				var yInd = Math.floor((sY - startMaj)/(boxS + inGap));
+				midCx.fillRect(screenL + startMin + xInd * (boxS + inGap), screenT + startMaj + yInd * (boxS + inGap), boxS, boxS);
 			}
 			else
 			{
@@ -109,11 +109,11 @@ function updateClick(e)
 				midCx.fillRect(screenL + screenW - butS, screenT + screenH - (butInd + 1) * butS, butS, butS);
 			}
 		
-			else if(sX > startX && sX < screenW - butS - startX && sY > startY && sY < screenH - startY)
+			else if(sX > startMin && sX < screenW - butS - startMin && sY > startMaj && sY < screenH - startMaj)
 			{
-				var xInd = Math.floor((sY - startY)/(boxS + inGap));
-				var yInd = Math.floor((sX - startX)/(boxS + inGap));
-				midCx.fillRect(screenL + startX + yInd * (boxS + inGap), screenT + startY + xInd * (boxS + inGap), boxS, boxS);
+				var xInd = Math.floor((sY - startMaj)/(boxS + inGap));
+				var yInd = Math.floor((sX - startMin)/(boxS + inGap));
+				midCx.fillRect(screenL + startMin + yInd * (boxS + inGap), screenT + startMaj + xInd * (boxS + inGap), boxS, boxS);
 			}
 			else
 			{
@@ -204,9 +204,10 @@ function reConfigure()
 	frontCanv.width = screenW + scrollAmt;
 	frontCanv.height = screenH + scrollAmt;
 	backCx.restore();
-	backCx.translate(0, screenT);
 	frontCx.restore();
-	frontCx.translate(0, screenT);
+	backCx.save();
+	frontCx.save();
+
 	sMaj = Math.max(screenW, screenH);
 	sMin = Math.min(screenW, screenH);
 	flipped = (screenW > screenH);
@@ -215,8 +216,8 @@ function reConfigure()
 	boxS = Math.min((sMaj - butS - 2 * outGap - (numY-1) * inGap)/numY, 
 					(sMin - 2 * outGap - (numX-1) * inGap)/numX);
 					
-	startX = (sMin - boxS * numX - (numX - 1) * inGap)/2;
-	startY = (sMaj - butS - boxS * numY - (numY -1) * inGap)/2;
+	startMin = (sMin - boxS * numX - (numX - 1) * inGap)/2;
+	startMaj = (sMaj - butS - boxS * numY - (numY -1) * inGap)/2;
 	
 	drawBase();
 }
@@ -226,12 +227,12 @@ function drawBase()
 
 	backCx.clearRect(0, 0, backCanv.width, backCanv.height);
 	frontCx.clearRect(0, 0, backCanv.width, backCanv.height);
-	backCx.restore();
+	
+	backCx.translate(0, screenT);
+	frontCx.translate(0, screenT);
 	
 	if(flipped)
 	{
-		backCx.save();
-		backCx.translate(0, screenT);
 		backCx.rotate(-Math.PI/2);
 		backCx.translate(-sMin, 0);
 		
@@ -252,13 +253,13 @@ function drawBase()
 		}
 	}
 	
-	
+	backCx.fillRect(2, 2, boxS, boxS);
 		
 	for(var i = 0; i < numX; i += 1)
 	{
 		for(var j = 0; j < numY; j += 1)
 		{
-			backCx.fillRect(startX + i * (boxS + inGap), startY + j * (boxS + inGap), boxS, boxS);
+			backCx.fillRect(startMin + i * (boxS + inGap), startMaj + j * (boxS + inGap), boxS, boxS);
 		}
 	}
 }
